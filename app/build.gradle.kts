@@ -1,9 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("org.jetbrains.kotlin.plugin.compose") version libs.versions.composeCompiler.get()  // Use the composeCompiler version from the catalog
+    id("org.jetbrains.kotlin.plugin.compose") version libs.versions.composeCompiler.get()
 }
-
 
 android {
     namespace = "com.pt.chat"
@@ -48,6 +47,12 @@ android {
 }
 
 dependencies {
+    implementation(project(":core"))
+    implementation(project(":libraries:network"))
+    implementation(project(":features:chat"))
+
+    implementation(libs.koin.android)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)
@@ -68,5 +73,6 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     implementation(libs.androidx.room.ktx)
-    implementation(libs.koin.android.v342)
+
+    implementation(libs.androidx.navigation.compose)
 }

@@ -10,8 +10,10 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        jcenter() // Adicione se necessário
     }
 }
+
 rootProject.name = "Chat"
 include(":app")
 include(":libraries")
