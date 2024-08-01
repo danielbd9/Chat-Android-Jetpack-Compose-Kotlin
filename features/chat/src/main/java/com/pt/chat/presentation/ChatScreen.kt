@@ -11,6 +11,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.pt.chat.domain.model.Message
+import com.pt.core.utils.BaseErrorScreen
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -20,10 +21,18 @@ fun ChatScreen(
     chatViewModel: ChatViewModel = koinViewModel()
 ) {
     val messages by chatViewModel.messages.collectAsState()
+    val error by chatViewModel.error.collectAsState()
 
-    LazyColumn(modifier = modifier) {
-        items(messages) { message ->
-            MessageItem(message)
+    if (error != null) {
+        BaseErrorScreen(
+            errorMessage = error ?: "Unknown error",
+            onRetry = { chatViewModel.fetchMessages() }
+        )
+    } else {
+        LazyColumn(modifier = modifier) {
+            items(messages) { message ->
+                MessageItem(message)
+            }
         }
     }
 }

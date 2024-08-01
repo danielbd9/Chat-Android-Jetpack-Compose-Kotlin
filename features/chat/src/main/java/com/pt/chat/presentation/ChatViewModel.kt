@@ -1,33 +1,31 @@
 package com.pt.chat.presentation
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.pt.chat.domain.model.Message
 import com.pt.chat.domain.model.User
 import com.pt.chat.domain.useCase.GetMessagesUseCase
+import com.pt.core.utils.BaseViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 
 class ChatViewModel(
-    private val getMessagesUseCase: GetMessagesUseCase,
-) : ViewModel() {
+    private val getMessagesUseCase: GetMessagesUseCase
+) : BaseViewModel() {
 
     private val _messages = MutableStateFlow<List<Message>>(emptyList())
     val messages: StateFlow<List<Message>> = _messages
+
+    private val _users = MutableStateFlow<List<User>>(emptyList())
+    val users: StateFlow<List<User>> = _users
 
     init {
         fetchMessages()
     }
 
-    private fun fetchMessages() {
-        viewModelScope.launch {
-            try {
-                val fetchedMessages = getMessagesUseCase.execute()
-                _messages.value = fetchedMessages
-            } catch (e: Exception) {
-              val error = e.message
-            }
+    fun fetchMessages() {
+        doAsyncWork {
+            val messageList = getMessagesUseCase.execute(Unit)
+            _messages.value = messageList.messages
+            _users.value = messageList.users
         }
     }
 }

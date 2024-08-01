@@ -4,5 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class MessageList(
-    val messages: List<Message>
+    val messages: List<Message>,
+    val users: List<User>
 )
