@@ -1,4 +1,4 @@
-package com.pt.chat.presentation
+package com.pt.chat.presentation.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -17,12 +17,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.composable
+import androidx.navigation.NavController
+import com.pt.chat.presentation.ChatViewModel
 import com.pt.chat.presentation.ui.components.MessageBubble
 import com.pt.core.utils.theme.LoadingIndicator
 import kotlinx.coroutines.launch
@@ -30,7 +28,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ChatScreen(
-    navController: NavHostController,
+    navController: NavController,
     chatViewModel: ChatViewModel = koinViewModel()
 ) {
     val messagesWithUsers by chatViewModel.messagesWithUsers.collectAsState()
@@ -70,10 +68,11 @@ fun ChatScreen(
                 ) {
                     items(messagesWithUsers) { messageWithUser ->
                         MessageBubble(
-                            message = messageWithUser.message,
-                            user = messageWithUser.user,
+                            message = messageWithUser.messages,
+                            user = messageWithUser.users,
+                            navController = navController,
                             modifier = Modifier.fillMaxWidth(),
-                            isSent = messageWithUser.message.userId == chatViewModel.getLoggedInUserId()
+                            isSent = messageWithUser.messages.userId == chatViewModel.getLoggedInUserId()
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                     }
@@ -132,16 +131,4 @@ fun ChatScreen(
             }
         }
     }
-}
-
-fun NavGraphBuilder.addChatScreen(navController: NavHostController) {
-    composable(route = "chat") {
-        ChatScreen(navController)
-    }
-}
-
-@Preview
-@Composable
-fun PreviewChatScreen() {
-    ChatScreen(navController = NavHostController(context = androidx.compose.ui.platform.LocalContext.current))
 }

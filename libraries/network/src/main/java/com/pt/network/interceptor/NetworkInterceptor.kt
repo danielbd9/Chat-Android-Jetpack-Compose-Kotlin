@@ -2,10 +2,9 @@ package com.pt.network.interceptor
 
 import okhttp3.Interceptor
 import okhttp3.Response
-import okio.IOException
+import java.io.IOException
 
 class NetworkInterceptor : Interceptor {
-    @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         val response = chain.proceed(request)
@@ -31,5 +30,3 @@ class ForbiddenException(message: String) : IOException(message)
 class NotFoundException(message: String) : IOException(message)
 class ServerErrorException(message: String) : IOException(message)
 class ApiException(message: String) : IOException(message)
-
-

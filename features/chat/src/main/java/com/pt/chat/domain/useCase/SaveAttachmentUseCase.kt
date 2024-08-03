@@ -7,9 +7,10 @@ import com.pt.core.utils.BaseUseCase
 
 class SaveAttachmentsUseCase(
     private val repository: IChatRepository
-) : BaseUseCase<List<Attachment>, Unit> {
-    override suspend fun execute(params: List<Attachment>) {
-        val attachmentEntities = params.map { it.toEntity() }
+) : BaseUseCase<Pair<Int, List<Attachment>>, Unit> {
+    override suspend fun execute(params: Pair<Int, List<Attachment>>) {
+        val (messageId, attachments) = params
+        val attachmentEntities = attachments.map { it.toEntity(messageId) }
         repository.saveAttachments(attachmentEntities)
     }
 }

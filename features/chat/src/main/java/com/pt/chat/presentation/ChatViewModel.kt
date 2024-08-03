@@ -104,7 +104,7 @@ class ChatViewModel(
     }
 
     private fun generateMessageId(): Int {
-        return (messagesWithUsers.value.maxOfOrNull { it.message.id } ?: 0) + 1
+        return (messagesWithUsers.value.maxOfOrNull { it.messages.id } ?: 0) + 1
     }
 
     fun getLoggedInUserId(): Int {

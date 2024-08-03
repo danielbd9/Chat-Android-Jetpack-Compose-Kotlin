@@ -15,6 +15,8 @@ class InitializeDataInteractor(
         val messageList = fetchMessagesFromApiUseCase.execute(Unit)
         saveMessagesUseCase.execute(messageList.messages)
         saveUsersUseCase.execute(messageList.users)
-        saveAttachmentsUseCase.execute(messageList.messages.flatMap { it.attachments.orEmpty() })
+        messageList.messages.forEach { message ->
+            saveAttachmentsUseCase.execute(message.id to message.attachments.orEmpty())
+        }
     }
 }

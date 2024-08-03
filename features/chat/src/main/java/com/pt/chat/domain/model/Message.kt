@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 data class Message(
     val id: Int,
     val userId: Int,
-    val content: String,
+    val content: String?,
     val timestamp: Long,
     val attachments: List<Attachment>?
 )

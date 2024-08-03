@@ -40,12 +40,10 @@ class ChatRepositoryImpl(
 
         if (messages.isEmpty() || users.isEmpty()) {
             val messageList = apiService.fetchMessagesFromApi()
-            return MessageList(messageList.messages, messageList.users, messageList.attachments)
+            return MessageList(messageList.messages, messageList.users)
         }
 
-        val attachments = messages.flatMap { it.attachments.orEmpty() }
-
-        return MessageList(messages, users, attachments)
+        return MessageList(messages, users)
     }
 
     override suspend fun fetchMessagesFromApi(): MessageList {
@@ -53,7 +51,6 @@ class ChatRepositoryImpl(
         return MessageList(
             messages = messageList.messages,
             users = messageList.users,
-            attachments = messageList.attachments ?: emptyList()
         )
     }
 }
