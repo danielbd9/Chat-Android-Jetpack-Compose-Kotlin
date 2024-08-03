@@ -1,13 +1,13 @@
-// libraries/network/build.gradle
+// libraries/database/build.gradle
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("org.jetbrains.kotlin.plugin.serialization") version libs.versions.kotlin.get()
-    id("kotlin-kapt")
+    id("com.google.devtools.ksp") version "2.0.20-RC-1.0.24" // Adicione esta linha
 }
 
 android {
-    namespace = "com.pt.network"
+    namespace = "com.pt.database"
     compileSdk = 34
     defaultConfig {
         minSdk = 24
@@ -34,9 +34,9 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
-    implementation(libs.logging.interceptor.v491)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler) // Certifique-se de que está usando o KSP
     implementation(libs.koin.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

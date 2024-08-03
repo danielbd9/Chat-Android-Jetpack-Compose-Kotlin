@@ -1,31 +1,114 @@
 package com.pt.chat.presentation
 
+import com.pt.chat.domain.interactor.InitializeDataInteractor
+import com.pt.chat.domain.model.Message
 import com.pt.chat.domain.model.MessageWithUser
 import com.pt.chat.domain.useCase.GetMessagesUseCase
+import com.pt.chat.domain.useCase.SaveMessagesUseCase
 import com.pt.core.utils.BaseViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.delay
 
 class ChatViewModel(
     private val getMessagesUseCase: GetMessagesUseCase,
+    private val saveMessagesUseCase: SaveMessagesUseCase,
+    private val initializeDataInteractor: InitializeDataInteractor
 ) : BaseViewModel() {
 
     private val _messagesWithUsers = MutableStateFlow<List<MessageWithUser>>(emptyList())
-    val messagesWithUsers: StateFlow<List<MessageWithUser>> = _messagesWithUsers
+    val messagesWithUsers: StateFlow<List<MessageWithUser>> = _messagesWithUsers.asStateFlow()
+
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
+
+    private var currentPage = 0
+    private val pageSize = 10
+    private var allMessagesLoaded = false
 
     init {
-        fetchMessagesWithUsers()
+        initializeData()
     }
 
-    private fun fetchMessagesWithUsers() {
+    private fun initializeData() {
         doAsyncWork {
+            initializeDataInteractor.execute()
+            fetchMessages(reset = true)
+        }
+    }
+
+    private fun fetchMessages(reset: Boolean = false) {
+        if (_isLoading.value) return
+
+        doAsyncWork {
+            _isLoading.value = true
+
             val data = getMessagesUseCase.execute(Unit)
-            _messagesWithUsers.value = data.messages.mapNotNull { message ->
+            val totalMessages = data.messages.sortedByDescending { it.timestamp }
+
+            val paginatedMessages = if (reset) {
+                currentPage = 0
+                totalMessages.take(pageSize)
+            } else {
+                totalMessages.drop(currentPage * pageSize).take(pageSize)
+            }
+
+            val newMessagesWithUsers = paginatedMessages.mapNotNull { message ->
                 val user = data.users.find { it.id == message.userId }
                 user?.let {
                     MessageWithUser(message, it)
                 }
             }
+
+            _messagesWithUsers.value = if (reset) newMessagesWithUsers else _messagesWithUsers.value + newMessagesWithUsers
+
+            if (newMessagesWithUsers.isNotEmpty()) {
+                currentPage++
+            } else {
+                allMessagesLoaded = true
+            }
+
+            delayBeforeLoading(false)
         }
+    }
+
+    private suspend fun delayBeforeLoading(value: Boolean) {
+        delay(2000)
+        _isLoading.value = value
+    }
+
+    fun loadMoreMessages() {
+        if (!allMessagesLoaded && !_isLoading.value) {
+            fetchMessages()
+        }
+    }
+
+    fun sendMessage(content: String) {
+        if (content.isNotBlank()) {
+            doAsyncWork {
+                val message = Message(
+                    id = generateMessageId(),
+                    userId = getLoggedInUserId(),
+                    content = content,
+                    timestamp = System.currentTimeMillis(),
+                    attachments = emptyList()
+                )
+                saveMessagesUseCase.execute(listOf(message))
+                currentPage = 0
+                allMessagesLoaded = false
+                _messagesWithUsers.value = emptyList()
+                fetchMessages(reset = true)
+            }
+        }
+    }
+
+    private fun generateMessageId(): Int {
+        return (messagesWithUsers.value.maxOfOrNull { it.message.id } ?: 0) + 1
+    }
+
+    fun getLoggedInUserId(): Int {
+        // Mock Id logged in user
+        return 1
     }
 }

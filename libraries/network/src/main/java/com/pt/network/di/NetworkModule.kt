@@ -1,5 +1,6 @@
 package com.pt.network.di
 
+import com.pt.network.interceptor.NetworkInterceptor
 import org.koin.dsl.module
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -13,6 +14,7 @@ val networkModule = module {
 
         OkHttpClient.Builder()
             .addInterceptor(logging)
+            .addInterceptor(NetworkInterceptor())
             .build()
     }
 

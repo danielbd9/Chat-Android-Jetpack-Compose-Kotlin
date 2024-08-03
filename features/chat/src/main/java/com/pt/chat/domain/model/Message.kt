@@ -7,5 +7,6 @@ data class Message(
     val id: Int,
     val userId: Int,
     val content: String,
-    val attachments: List<Attachment>? = null
+    val timestamp: Long,
+    val attachments: List<Attachment>?
 )
