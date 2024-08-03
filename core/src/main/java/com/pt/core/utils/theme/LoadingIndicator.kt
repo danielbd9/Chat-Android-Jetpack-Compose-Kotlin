@@ -1,64 +1,76 @@
 package com.pt.core.utils.theme
 
-import androidx.compose.animation.core.LinearOutSlowInEasing
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableLongStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.delay
 
 @Composable
 fun LoadingIndicator(
-    totalTime: Long = 10,
-    color: Color = Color.White,
-    onTimerChange: (Long) -> Unit = {}
+    color: Color = getPrimaryColor(),
+    alignment: Alignment = Alignment.BottomCenter
 ) {
-    var currentTime by remember { mutableLongStateOf(totalTime) }
-    var progress by remember { mutableFloatStateOf(1f) }
+    val infiniteTransition = rememberInfiniteTransition(label = "")
 
-    val progressAnimate by animateFloatAsState(
-        targetValue = progress,
-        animationSpec = tween(
-            durationMillis = 3000,
-            delayMillis = 10,
-            easing = LinearOutSlowInEasing
+    val scale1 by infiniteTransition.animateFloat(
+        initialValue = 0.5f,
+        targetValue = 1.5f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(600, easing = LinearOutSlowInEasing),
+            repeatMode = RepeatMode.Reverse
         ), label = ""
     )
 
-    LaunchedEffect(key1 = currentTime) {
-        if (currentTime > 0) {
-            delay(50L)
-            currentTime--
-            progress = currentTime / totalTime.toFloat()
-            onTimerChange(currentTime)
-        }
-    }
+    val scale2 by infiniteTransition.animateFloat(
+        initialValue = 1.5f,
+        targetValue = 0.5f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(600, easing = LinearOutSlowInEasing, delayMillis = 200),
+            repeatMode = RepeatMode.Reverse
+        ), label = ""
+    )
+
+    val scale3 by infiniteTransition.animateFloat(
+        initialValue = 0.5f,
+        targetValue = 1.5f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(600, easing = LinearOutSlowInEasing, delayMillis = 400),
+            repeatMode = RepeatMode.Reverse
+        ), label = ""
+    )
 
     Box(
-        modifier = Modifier
-            .fillMaxSize(),
-        contentAlignment = Alignment.Center
+        modifier = Modifier.fillMaxSize().padding(bottom = 16.dp),
+        contentAlignment = alignment
     ) {
-        CircularProgressIndicator(
-            progress = { progressAnimate },
-            modifier = Modifier.size(60.dp),
-            color = color,
-            strokeWidth = 10.dp,
-            strokeCap = StrokeCap.Round,
-        )
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(10.dp)
+                    .scale(scale1)
+                    .background(color, shape = androidx.compose.foundation.shape.CircleShape)
+            )
+            Box(
+                modifier = Modifier
+                    .size(10.dp)
+                    .scale(scale2)
+                    .background(color, shape = androidx.compose.foundation.shape.CircleShape)
+            )
+            Box(
+                modifier = Modifier
+                    .size(10.dp)
+                    .scale(scale3)
+                    .background(color, shape = androidx.compose.foundation.shape.CircleShape)
+            )
+        }
     }
 }

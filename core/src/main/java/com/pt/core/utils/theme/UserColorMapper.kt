@@ -12,8 +12,24 @@ fun getUserColor(userId: Int): Color {
         Color(0xFFF1C40F),
         Color(0xFFE67E22),
         Color(0xFFE74C3C),
-        Color(0xFFECF0F1),
-        Color(0xFF95A5A6)
+        Color(0xFFf9b9fc),
+        Color(0xFF07aa28)
     )
     return colors[userId % colors.size]
+}
+
+fun getPrimaryColor(): Color {
+   return Color( 0xFFfa4536)
+}
+
+fun getSecondaryColor(): Color {
+    return Color(0xFFfcbeb9)
+}
+
+fun getLightGrayColor(): Color {
+    return Color(0xFFededed)
+}
+
+fun getDarkGrayColor(): Color {
+    return Color(0xFF8b8a8a)
 }

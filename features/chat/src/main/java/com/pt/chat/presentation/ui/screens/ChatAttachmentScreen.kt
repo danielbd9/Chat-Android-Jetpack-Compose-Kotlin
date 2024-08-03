@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import com.pt.core.utils.theme.LoadingIndicator
 
 @Composable
 fun AttachmentScreen(attachmentUrl: String?, onBack: () -> Unit) {
@@ -45,10 +46,7 @@ fun AttachmentScreen(attachmentUrl: String?, onBack: () -> Unit) {
             )
 
             if (painterState is AsyncImagePainter.State.Loading) {
-                CircularProgressIndicator(
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.align(Alignment.Center)
-                )
+                LoadingIndicator(alignment = Alignment.Center)
             }
         } else {
             Text(

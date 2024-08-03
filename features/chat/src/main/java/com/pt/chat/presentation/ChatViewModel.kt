@@ -74,7 +74,7 @@ class ChatViewModel(
     }
 
     private suspend fun delayBeforeLoading(value: Boolean) {
-        delay(2000)
+        delay(500)
         _isLoading.value = value
     }
 
@@ -109,6 +109,6 @@ class ChatViewModel(
 
     fun getLoggedInUserId(): Int {
         // Mock Id logged in user
-        return 1
+        return 2
     }
 }

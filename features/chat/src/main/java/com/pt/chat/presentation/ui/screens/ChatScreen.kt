@@ -23,6 +23,8 @@ import androidx.navigation.NavController
 import com.pt.chat.presentation.ChatViewModel
 import com.pt.chat.presentation.ui.components.MessageBubble
 import com.pt.core.utils.theme.LoadingIndicator
+import com.pt.core.utils.theme.getLightGrayColor
+import com.pt.core.utils.theme.getPrimaryColor
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -53,6 +55,7 @@ fun ChatScreen(
         modifier = Modifier
             .fillMaxSize()
             .imePadding()
+            .background(getLightGrayColor())
     ) {
         Column(
             modifier = Modifier
@@ -125,7 +128,7 @@ fun ChatScreen(
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.Send,
                         contentDescription = "Send",
-                        tint = MaterialTheme.colorScheme.primary
+                        tint = getPrimaryColor()
                     )
                 }
             }
