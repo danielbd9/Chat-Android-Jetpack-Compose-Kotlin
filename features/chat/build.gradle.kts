@@ -77,4 +77,6 @@ dependencies {
     implementation(libs.ui)
     implementation(libs.ui.tooling)
     implementation(libs.androidx.foundation)
+
+    testImplementation(libs.mockk.test)
 }

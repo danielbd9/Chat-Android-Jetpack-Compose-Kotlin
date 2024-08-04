@@ -45,6 +45,7 @@ import com.pt.chat.presentation.ui.components.MessageBubble
 import com.pt.components.ui.LoadingIndicator
 import com.pt.components.mapper.getPrimaryColor
 import com.pt.components.mapper.getSecondaryColor
+import com.pt.components.ui.ErrorMessage
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -55,6 +56,7 @@ fun ChatScreen(
 ) {
     val messagesWithUsers by chatViewModel.messagesWithUsers.collectAsState()
     val isLoading by chatViewModel.isLoading.collectAsState()
+    val error by chatViewModel.error.collectAsState()
     var messageText by remember { mutableStateOf(TextFieldValue("")) }
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
@@ -71,87 +73,92 @@ fun ChatScreen(
             }
     }
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .imePadding()
-            .background(getSecondaryColor())
-    ) {
-        Column(
+    if(error.isNullOrEmpty()){
+        Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 8.dp, vertical = 4.dp)
+                .imePadding()
+                .background(getSecondaryColor())
         ) {
-            Box(modifier = Modifier.weight(1f)) {
-                LazyColumn(
-                    state = listState,
-                    reverseLayout = true,
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(vertical = 8.dp)
-                ) {
-                    items(messagesWithUsers) { messageWithUser ->
-                        MessageBubble(
-                            message = messageWithUser.messages,
-                            user = messageWithUser.users,
-                            navController = navController,
-                            modifier = Modifier.fillMaxWidth(),
-                            isSent = messageWithUser.messages.userId == chatViewModel.getLoggedInUserId()
-                        )
-                        Spacer(modifier = Modifier.height(4.dp))
-                    }
-                }
-
-                if (isLoading) {
-                    LoadingIndicator()
-                }
-            }
-
-            Row(
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color.White, shape = RoundedCornerShape(24.dp))
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                verticalAlignment = Alignment.CenterVertically
+                    .fillMaxSize()
+                    .padding(horizontal = 8.dp, vertical = 4.dp)
             ) {
-                BasicTextField(
-                    value = messageText,
-                    onValueChange = { messageText = it },
-                    modifier = Modifier
-                        .weight(1f)
-                        .background(Color(0xFFF1F1F1), shape = RoundedCornerShape(24.dp))
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
-                    maxLines = 5,
-                    textStyle = LocalTextStyle.current.copy(fontSize = 16.sp)
-                ) { innerTextField ->
-                    if (messageText.text.isEmpty()) {
-                        Text(
-                            text = "Type a message",
-                            color = Color.Gray,
-                            fontSize = 16.sp
-                        )
-                    }
-                    innerTextField()
-                }
-                IconButton(
-                    onClick = {
-                        if (messageText.text.isNotBlank()) {
-                            chatViewModel.sendMessage(messageText.text)
-                            messageText = TextFieldValue("")
-                            coroutineScope.launch {
-                                listState.animateScrollToItem(0, scrollOffset = 10)
-                            }
-                            focusManager.clearFocus()
-                            keyboardController?.hide()
+                Box(modifier = Modifier.weight(1f)) {
+                    LazyColumn(
+                        state = listState,
+                        reverseLayout = true,
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = PaddingValues(vertical = 8.dp)
+                    ) {
+                        items(messagesWithUsers) { messageWithUser ->
+                            MessageBubble(
+                                message = messageWithUser.messages,
+                                user = messageWithUser.users,
+                                navController = navController,
+                                modifier = Modifier.fillMaxWidth(),
+                                isSent = messageWithUser.messages.userId == chatViewModel.getLoggedInUserId()
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
                         }
                     }
+
+                    if (isLoading) {
+                        LoadingIndicator()
+                    }
+                }
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(Color.White, shape = RoundedCornerShape(24.dp))
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.Send,
-                        contentDescription = "Send",
-                        tint = getPrimaryColor()
-                    )
+                    BasicTextField(
+                        value = messageText,
+                        onValueChange = { messageText = it },
+                        modifier = Modifier
+                            .weight(1f)
+                            .background(Color(0xFFF1F1F1), shape = RoundedCornerShape(24.dp))
+                            .padding(horizontal = 16.dp, vertical = 8.dp),
+                        maxLines = 5,
+                        textStyle = LocalTextStyle.current.copy(fontSize = 16.sp)
+                    ) { innerTextField ->
+                        if (messageText.text.isEmpty()) {
+                            Text(
+                                text = "Type a message",
+                                color = Color.Gray,
+                                fontSize = 16.sp
+                            )
+                        }
+                        innerTextField()
+                    }
+                    IconButton(
+                        onClick = {
+                            if (messageText.text.isNotBlank()) {
+                                chatViewModel.sendMessage(messageText.text)
+                                messageText = TextFieldValue("")
+                                coroutineScope.launch {
+                                    listState.animateScrollToItem(0, scrollOffset = 10)
+                                }
+                                focusManager.clearFocus()
+                                keyboardController?.hide()
+                            }
+                        }
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.Send,
+                            contentDescription = "Send",
+                            tint = getPrimaryColor()
+                        )
+                    }
                 }
             }
         }
+    }
+    else{
+        ErrorMessage("Sorry, something went wrong! \n Try again later.")
     }
 }

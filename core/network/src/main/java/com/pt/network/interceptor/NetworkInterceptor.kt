@@ -11,12 +11,12 @@ class NetworkInterceptor : Interceptor {
 
         if (!response.isSuccessful) {
             when (response.code) {
-                400 -> throw BadRequestException("Bad Request")
-                401 -> throw UnauthorizedException("Unauthorized")
-                403 -> throw ForbiddenException("Forbidden")
-                404 -> throw NotFoundException("Not Found")
-                500 -> throw ServerErrorException("Server Error")
-                else -> throw ApiException("Unknown API error")
+                400 -> throw NetworkException.BadRequestException("Bad Request")
+                401 -> throw NetworkException.UnauthorizedException("Unauthorized")
+                403 -> throw NetworkException.ForbiddenException("Forbidden")
+                404 -> throw NetworkException.NotFoundException("Not Found")
+                500 -> throw NetworkException.ServerErrorException("Server Error")
+                else -> throw NetworkException.ApiException("Unknown API error")
             }
         }
 
@@ -24,9 +24,11 @@ class NetworkInterceptor : Interceptor {
     }
 }
 
-class BadRequestException(message: String) : IOException(message)
-class UnauthorizedException(message: String) : IOException(message)
-class ForbiddenException(message: String) : IOException(message)
-class NotFoundException(message: String) : IOException(message)
-class ServerErrorException(message: String) : IOException(message)
-class ApiException(message: String) : IOException(message)
+sealed class NetworkException(message: String) : IOException(message) {
+    class BadRequestException(message: String) : NetworkException(message)
+    class UnauthorizedException(message: String) : NetworkException(message)
+    class ForbiddenException(message: String) : NetworkException(message)
+    class NotFoundException(message: String) : NetworkException(message)
+    class ServerErrorException(message: String) : NetworkException(message)
+    class ApiException(message: String) : NetworkException(message)
+}

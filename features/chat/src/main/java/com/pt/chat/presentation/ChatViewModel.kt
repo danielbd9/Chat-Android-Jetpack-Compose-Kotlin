@@ -23,9 +23,12 @@ class ChatViewModel(
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
 
+    val error: StateFlow<String?> = _error
+
     private var currentPage = 0
-    private val pageSize = 10
     private var allMessagesLoaded = false
+    private val pageSize = 10
+
 
     init {
         initializeData()
