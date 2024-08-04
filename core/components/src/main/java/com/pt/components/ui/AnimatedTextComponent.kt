@@ -46,7 +46,7 @@ fun AnimatedTextComponent() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(bottom = 200.dp),
+            .padding(bottom = 130.dp),
         contentAlignment = Alignment.BottomCenter
     ) {
         AnimatedVisibility(
