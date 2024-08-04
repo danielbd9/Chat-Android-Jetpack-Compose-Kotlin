@@ -10,6 +10,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import java.util.Random
 
 class ChatViewModel(
     private val getMessagesUseCase: GetMessagesUseCase,
@@ -25,23 +26,22 @@ class ChatViewModel(
 
     val error: StateFlow<String?> = _error
 
-    private var currentPage = 0
-    private var allMessagesLoaded = false
+    var currentPage = 0
+    var allMessagesLoaded = false
     private val pageSize = 10
-
 
     init {
         initializeData()
     }
 
-    private fun initializeData() {
+    fun initializeData() {
         doAsyncWork {
             initializeDataInteractor.execute()
             fetchMessages(reset = true)
         }
     }
 
-    private fun fetchMessages(reset: Boolean = false) {
+    fun fetchMessages(reset: Boolean = false) {
         if (_isLoading.value) return
 
         doAsyncWork {
@@ -98,16 +98,20 @@ class ChatViewModel(
                     attachments = emptyList()
                 )
                 saveMessagesUseCase.execute(listOf(message))
-                currentPage = 0
-                allMessagesLoaded = false
-                _messagesWithUsers.value = emptyList()
+                resetState()
                 fetchMessages(reset = true)
             }
         }
     }
 
+    private fun resetState() {
+        currentPage = 0
+        allMessagesLoaded = false
+        _messagesWithUsers.value = emptyList()
+    }
+
     private fun generateMessageId(): Int {
-        return (messagesWithUsers.value.maxOfOrNull { it.messages.id } ?: 0) + 1
+        return Random().nextInt()
     }
 
     fun getLoggedInUserId(): Int {

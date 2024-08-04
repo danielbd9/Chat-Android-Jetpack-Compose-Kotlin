@@ -12,6 +12,7 @@ coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
+kotlinxCoroutinesTest = "1.7.3"
 kotlinxSerializationJson = "1.6.3"
 lifecycleRuntimeKtx = "2.8.4"
 composeBom = "2024.06.00"
@@ -32,6 +33,7 @@ uiTooling = "1.6.8"
 mockk = "1.13.11"
 
 [libraries]
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
 mockk-test = {group= "io.mockk", name = "mockk", version.ref = "mockk"}
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }

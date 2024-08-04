@@ -79,4 +79,5 @@ dependencies {
     implementation(libs.androidx.foundation)
 
     testImplementation(libs.mockk.test)
+    testImplementation(libs.kotlinx.coroutines.test)
 }
