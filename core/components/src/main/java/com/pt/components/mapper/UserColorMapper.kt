@@ -27,11 +27,12 @@ fun getUserColor(userId: Int): Color {
         pink,
         lightGray
     )
-    return colors[userId % colors.size]
+    val index = if (userId < 0) (userId % colors.size + colors.size) % colors.size else userId % colors.size
+    return colors[index]
 }
 
 fun getPrimaryColor(): Color {
-   return orange
+    return orange
 }
 
 fun getSecondaryColor(): Color {

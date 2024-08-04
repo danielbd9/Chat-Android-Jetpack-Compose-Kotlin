@@ -57,6 +57,7 @@ fun MessageBubble(
             Box(
                 modifier = Modifier
                     .size(40.dp)
+                    .align(Alignment.Bottom)
                     .background(getUserColor(user.id), CircleShape),
                 contentAlignment = Alignment.Center
             ) {

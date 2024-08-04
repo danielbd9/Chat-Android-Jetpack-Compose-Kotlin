@@ -1,4 +1,4 @@
-package com.pt.chat
+package com.pt.chat.serialization
 
 import com.pt.chat.domain.model.Attachment
 import com.pt.chat.domain.model.Message
