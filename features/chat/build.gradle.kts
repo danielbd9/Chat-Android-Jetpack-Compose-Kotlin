@@ -1,8 +1,8 @@
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.jetbrains.kotlin.android)
-    id("org.jetbrains.kotlin.plugin.compose") version libs.versions.composeCompiler.get()
-    id("org.jetbrains.kotlin.plugin.serialization") version "2.0.0"
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.serialization)
+    alias(libs.plugins.kotlin.compose)
     id("com.google.devtools.ksp") version "2.0.20-RC-1.0.24"
 }
 
@@ -55,25 +55,24 @@ dependencies {
     implementation(libs.androidx.material3)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
-    implementation(libs.logging.interceptor.v491)
+    api(libs.kotlinx.serialization)
+    implementation(libs.logging.interceptor)
+    api(libs.retrofit)
+    implementation(libs.retrofit.serialization.converter)
     implementation(libs.koin.android)
     implementation(libs.androidx.navigation.compose)
-    implementation(libs.kotlinx.serialization.json)
-    implementation(libs.koin.androidx.compose.v315)
+    implementation(libs.koin.androidx.compose)
     implementation(libs.coil.compose)
 
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
 
-    implementation(libs.androidx.material)
+    implementation(libs.material)
     implementation(libs.ui)
     implementation(libs.ui.tooling)
     implementation(libs.androidx.foundation)

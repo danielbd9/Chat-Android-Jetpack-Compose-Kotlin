@@ -1,8 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.jetbrains.kotlin.android)
-    id("org.jetbrains.kotlin.plugin.serialization") version libs.versions.kotlin.get()
-    id("kotlin-kapt")
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.serialization)
 }
 
 android {
@@ -32,11 +31,13 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
-    implementation(libs.logging.interceptor.v491)
+
+    api(libs.kotlinx.serialization)
+    implementation(libs.logging.interceptor)
+    api(libs.retrofit)
+    implementation(libs.retrofit.serialization.converter)
+
     implementation(libs.koin.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 }
