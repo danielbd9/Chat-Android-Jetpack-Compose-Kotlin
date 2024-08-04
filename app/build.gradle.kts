@@ -1,4 +1,3 @@
-// app/build.gradle
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -42,9 +41,10 @@ android {
 }
 
 dependencies {
-    implementation(project(":core"))
-    implementation(project(":libraries:network"))
-    implementation(project(":libraries:database"))
+    implementation(project(":core:common"))
+    implementation(project(":core:components"))
+    implementation(project(":core:network"))
+    implementation(project(":core:storage"))
     implementation(project(":features:chat"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

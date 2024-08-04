@@ -3,6 +3,7 @@ accompanistSystemuicontroller = "0.25.1"
 agp = "8.5.1"
 coilCompose = "2.2.2"
 converterGson = "2.9.0"
+foundation = "1.6.8"
 gson = "2.10.1"
 koin = "3.5.6"
 koinAndroidxCompose = "3.4.2"
@@ -19,16 +20,21 @@ loggingInterceptor = "4.12.0"
 loggingInterceptorVersion = "4.12.0"
 lottieCompose = "5.0.3"
 material = "1.12.0"
+materialVersion = "1.6.8"
 navigationCompose = "2.7.7"
 retrofit = "2.11.0"
 roomKtx = "2.6.1"
 roomCompiler = "2.6.1"
 composeCompiler = "2.0.0"
 activityCompose = "1.9.1"
+ui = "1.6.8"
+uiTooling = "1.6.8"
 
 [libraries]
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "foundation" }
+androidx-material = { module = "androidx.compose.material:material", version.ref = "materialVersion" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 androidx-room-coroutines = { module = "androidx.room:room-coroutines", version.ref = "roomKtx" }
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomKtx" }
@@ -63,6 +69,8 @@ material = { group = "com.google.android.material", name = "material", version.r
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 compose-compiler = { group = "androidx.compose.compiler", name = "compiler", version.ref = "composeCompiler" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }  # Add the activity-compose library
+ui = { module = "androidx.compose.ui:ui", version.ref = "ui" }
+ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "uiTooling" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

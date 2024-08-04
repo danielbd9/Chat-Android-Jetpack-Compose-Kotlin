@@ -3,7 +3,6 @@ package com.pt.chat.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -18,7 +17,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.pt.chat.presentation.ui.addAttachmentScreen
 import com.pt.chat.presentation.ui.addChatScreen
 import com.pt.chat.ui.splash.screen.SplashScreen
-import com.pt.chat.ui.theme.ChatTheme
+import com.pt.components.theme.ChatTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

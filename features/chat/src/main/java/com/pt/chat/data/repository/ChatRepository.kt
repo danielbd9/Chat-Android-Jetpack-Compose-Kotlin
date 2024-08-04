@@ -1,18 +1,18 @@
 package com.pt.chat.data.repository
 
-import com.pt.chat.data.service.ApiService
+import com.pt.chat.data.local.dao.AttachmentDao
+import com.pt.chat.data.local.dao.MessageDao
+import com.pt.chat.data.local.dao.UserDao
+import com.pt.chat.data.local.entities.AttachmentEntity
+import com.pt.chat.data.local.entities.MessageEntity
+import com.pt.chat.data.local.entities.UserEntity
+import com.pt.chat.domain.interfaces.IChatApiService
 import com.pt.chat.domain.interfaces.IChatRepository
-import com.pt.chat.domain.mapper.toDomain
+import com.pt.chat.data.mapper.toDomain
 import com.pt.chat.domain.model.MessageList
-import com.pt.database.dao.AttachmentDao
-import com.pt.database.dao.MessageDao
-import com.pt.database.dao.UserDao
-import com.pt.database.entities.AttachmentEntity
-import com.pt.database.entities.MessageEntity
-import com.pt.database.entities.UserEntity
 
 class ChatRepositoryImpl(
-    private val apiService: ApiService,
+    private val apiService: IChatApiService,
     private val messageDao: MessageDao,
     private val userDao: UserDao,
     private val attachmentDao: AttachmentDao

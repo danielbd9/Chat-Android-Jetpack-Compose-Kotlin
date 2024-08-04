@@ -1,7 +1,10 @@
 package com.pt.chat.di
 
-import com.pt.chat.data.service.ApiService
+import android.content.Context
+import androidx.room.Room
+import com.pt.chat.data.local.ChatDatabase
 import com.pt.chat.data.repository.ChatRepositoryImpl
+import com.pt.chat.domain.interfaces.IChatApiService
 import com.pt.chat.domain.interactor.InitializeDataInteractor
 import com.pt.chat.domain.interfaces.IChatRepository
 import com.pt.chat.domain.useCase.GetMessagesUseCase
@@ -14,7 +17,7 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 
 val chatModule = module {
-    single { get<Retrofit>().create(ApiService::class.java) }
+    single { get<Retrofit>().create(IChatApiService::class.java) }
 
     single<IChatRepository> { ChatRepositoryImpl(get(), get(), get(), get()) }
 
@@ -28,5 +31,17 @@ val chatModule = module {
 
     factory { SaveUsersUseCase(get()) }
 
-    viewModel { ChatViewModel(get(), get(), get())}
+    single {
+        Room.databaseBuilder(
+            get<Context>(),
+            ChatDatabase::class.java,
+            "chat_database"
+        ).fallbackToDestructiveMigration().build()
+    }
+
+    single { get<ChatDatabase>().messageDao() }
+    single { get<ChatDatabase>().userDao() }
+    single { get<ChatDatabase>().attachmentDao() }
+
+    viewModel { ChatViewModel(get(), get(), get()) }
 }

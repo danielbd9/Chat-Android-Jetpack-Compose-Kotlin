@@ -1,0 +1,28 @@
+package com.pt.network.di
+
+import com.pt.network.interceptor.NetworkInterceptor
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.dsl.module
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+
+val networkModule = module {
+    single {
+        val logging = HttpLoggingInterceptor()
+        logging.level = HttpLoggingInterceptor.Level.BODY
+
+        OkHttpClient.Builder()
+            .addInterceptor(logging)
+            .addInterceptor(NetworkInterceptor())
+            .build()
+    }
+
+    single {
+        Retrofit.Builder()
+            .baseUrl("https://private-edd460-7egendchallengeandroid.apiary-mock.com/")
+            .client(get())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+}

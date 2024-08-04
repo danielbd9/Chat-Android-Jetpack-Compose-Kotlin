@@ -17,7 +17,6 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
-import com.pt.chat.R
 import kotlinx.coroutines.delay
 
 @Composable
@@ -37,7 +36,6 @@ fun SplashScreen(navController: NavController) {
     ) {
         LottieAnimation(
             modifier = Modifier.size(200.dp),
-            resId = R.raw.splash_animation,
             iterations = LottieConstants.IterateForever,
             speed = 1.8f
         )
@@ -47,11 +45,10 @@ fun SplashScreen(navController: NavController) {
 @Composable
 fun LottieAnimation(
     modifier: Modifier = Modifier,
-    resId: Int,
     iterations: Int = LottieConstants.IterateForever,
     speed: Float = 1f
 ) {
-    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(resId))
+    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(com.pt.components.R.raw.splash_animation))
     val progress by animateLottieCompositionAsState(
         composition = composition,
         iterations = iterations,

@@ -1,9 +1,9 @@
-// features/chat/build.gradle
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("org.jetbrains.kotlin.plugin.compose") version libs.versions.composeCompiler.get()
     id("org.jetbrains.kotlin.plugin.serialization") version "2.0.0"
+    id("com.google.devtools.ksp") version "2.0.20-RC-1.0.24"
 }
 
 android {
@@ -39,9 +39,10 @@ android {
 }
 
 dependencies {
-    implementation(project(":core"))
-    implementation(project(":libraries:network"))
-    implementation(project(":libraries:database"))
+    implementation(project(":core:common"))
+    implementation(project(":core:components"))
+    implementation(project(":core:network"))
+    implementation(project(":core:storage"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -68,8 +69,12 @@ dependencies {
     implementation(libs.koin.androidx.compose.v315)
     implementation(libs.coil.compose)
 
-    implementation("androidx.compose.material:material:1.6.8")
-    implementation("androidx.compose.ui:ui:1.6.8")
-    implementation("androidx.compose.ui:ui-tooling:1.6.8")
-    implementation("androidx.compose.foundation:foundation:1.6.8")
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
+    implementation(libs.androidx.material)
+    implementation(libs.ui)
+    implementation(libs.ui.tooling)
+    implementation(libs.androidx.foundation)
 }

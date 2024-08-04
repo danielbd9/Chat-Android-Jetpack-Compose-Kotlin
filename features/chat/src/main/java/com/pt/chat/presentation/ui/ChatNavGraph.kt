@@ -16,11 +16,15 @@ fun NavGraphBuilder.addChatScreen(navController: NavHostController) {
 
 fun NavGraphBuilder.addAttachmentScreen(navController: NavHostController) {
     composable(
-        route = "attachment/{attachmentUrl}",
-        arguments = listOf(navArgument("attachmentUrl") { type = NavType.StringType })
+        route = "attachment/{attachmentUrl}/{attachmentTitle}",
+        arguments = listOf(
+            navArgument("attachmentUrl") { type = NavType.StringType },
+            navArgument("attachmentTitle") { type = NavType.StringType }
+        )
     ) { backStackEntry ->
         val attachmentUrl = backStackEntry.arguments?.getString("attachmentUrl")
-        AttachmentScreen(attachmentUrl = attachmentUrl) {
+        val attachmentTitle = backStackEntry.arguments?.getString("attachmentTitle")
+        AttachmentScreen(attachmentUrl = attachmentUrl, attachmentTitle = attachmentTitle) {
             navController.popBackStack()
         }
     }

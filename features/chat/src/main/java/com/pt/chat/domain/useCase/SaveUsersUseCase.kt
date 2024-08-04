@@ -1,9 +1,9 @@
 package com.pt.chat.domain.useCase
 
 import com.pt.chat.domain.interfaces.IChatRepository
-import com.pt.chat.domain.mapper.toEntity
+import com.pt.chat.data.mapper.toEntity
 import com.pt.chat.domain.model.User
-import com.pt.core.utils.BaseUseCase
+import com.pt.common.utils.BaseUseCase
 
 class SaveUsersUseCase(
     private val repository: IChatRepository

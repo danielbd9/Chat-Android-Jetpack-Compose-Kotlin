@@ -5,11 +5,11 @@ import com.pt.chat.domain.model.Message
 import com.pt.chat.domain.model.MessageWithUser
 import com.pt.chat.domain.useCase.GetMessagesUseCase
 import com.pt.chat.domain.useCase.SaveMessagesUseCase
-import com.pt.core.utils.BaseViewModel
+import com.pt.common.utils.BaseViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.delay
 
 class ChatViewModel(
     private val getMessagesUseCase: GetMessagesUseCase,
