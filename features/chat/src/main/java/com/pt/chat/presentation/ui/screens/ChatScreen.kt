@@ -42,10 +42,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.pt.chat.presentation.ChatViewModel
 import com.pt.chat.presentation.ui.components.MessageBubble
-import com.pt.components.ui.LoadingIndicator
 import com.pt.components.mapper.getPrimaryColor
 import com.pt.components.mapper.getSecondaryColor
 import com.pt.components.ui.ErrorMessage
+import com.pt.components.ui.LoadingIndicator
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 

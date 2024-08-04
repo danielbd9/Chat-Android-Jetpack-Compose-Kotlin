@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.pt.chat.data.local.ChatDatabase
 import com.pt.chat.data.repository.ChatRepositoryImpl
-import com.pt.chat.domain.interfaces.IChatApiService
 import com.pt.chat.domain.interactor.InitializeDataInteractor
+import com.pt.chat.domain.interfaces.IChatApiService
 import com.pt.chat.domain.interfaces.IChatRepository
 import com.pt.chat.domain.useCase.GetMessagesUseCase
 import com.pt.chat.domain.useCase.SaveAttachmentsUseCase

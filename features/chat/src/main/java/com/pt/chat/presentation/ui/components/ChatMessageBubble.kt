@@ -30,10 +30,10 @@ import coil.compose.SubcomposeAsyncImage
 import com.pt.chat.domain.model.Attachment
 import com.pt.chat.domain.model.Message
 import com.pt.chat.domain.model.User
-import com.pt.components.ui.PlaceholderComponent
 import com.pt.components.mapper.getPrimaryColor
 import com.pt.components.mapper.getSecondaryColor
 import com.pt.components.mapper.getUserColor
+import com.pt.components.ui.PlaceholderComponent
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 

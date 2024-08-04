@@ -6,9 +6,9 @@ import com.pt.chat.data.local.dao.UserDao
 import com.pt.chat.data.local.entities.AttachmentEntity
 import com.pt.chat.data.local.entities.MessageEntity
 import com.pt.chat.data.local.entities.UserEntity
+import com.pt.chat.data.mapper.toDomain
 import com.pt.chat.domain.interfaces.IChatApiService
 import com.pt.chat.domain.interfaces.IChatRepository
-import com.pt.chat.data.mapper.toDomain
 import com.pt.chat.domain.model.MessageList
 
 class ChatRepositoryImpl(
