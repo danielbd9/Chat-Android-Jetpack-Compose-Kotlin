@@ -7,7 +7,7 @@
 
 ## Resume
 
-This is a chat application built using Jetpack Compose for the UI and Kotlin. It features a splash screen, chat interface, and attachment handling. The application is modularized into different components to ensure scalability and maintainability.
+This is a chat application built using Jetpack Compose for the UI and Kotlin. It features a splash screen, chat interface, and attachment handling. The application is modularized into different components to ensure scalability and maintainability. The project follows Clean Architecture principles to separate concerns and create a more testable and maintainable codebase.
 
 ## Features
 
