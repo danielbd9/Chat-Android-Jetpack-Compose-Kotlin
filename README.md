@@ -1,16 +1,14 @@
-# Chat-Android-Kotlin
-
-### README.md
-
 # Chat Application
 
+#7egend - Challenge
+
+<img src="https://github.com/user-attachments/assets/74e1ad30-f91b-4033-a959-b3989f7bf4e4" alt="Chat Message" width="300" height="600"/>
+<img src="https://github.com/user-attachments/assets/f1cba4fb-42ec-4dc0-ba85-7c1a5954ae74" alt="Chat Message 2" width="300" height="600"/>
+<img src="https://github.com/user-attachments/assets/f50a1b9c-49fe-4fb2-91a2-45d725725041" alt="Chat Splash" width="300" height="600"/>
+
+## Resume
+
 This is a chat application built using Jetpack Compose for the UI and Kotlin. It features a splash screen, chat interface, and attachment handling. The application is modularized into different components to ensure scalability and maintainability.
-
-![Chat Splash](https://github.com/user-attachments/assets/f50a1b9c-49fe-4fb2-91a2-45d725725041)
-![Chat Splash 2](https://github.com/user-attachments/assets/5211fb57-0569-453a-85e5-5097e5d34574)
-![Chat Message](https://github.com/user-attachments/assets/74e1ad30-f91b-4033-a959-b3989f7bf4e4)
-![Chat Message 2](https://github.com/user-attachments/assets/f1cba4fb-42ec-4dc0-ba85-7c1a5954ae74)
-
 
 ## Features
 
@@ -35,7 +33,7 @@ The API endpoint is:
 ### 2. Core Module
 - Common Utilities: Provides base use cases and view models.
 - Theme: Defines color schemes and typography for the application.
-- UI Components: Additional reusable UI components such as animated text and loading indicators.
+- Components: Additional reusable UI components such as animated text and loading indicators.
 
 ### 3. Network Module
 - Networking: Manages API calls using Retrofit and Kotlinx Serialization.
@@ -43,12 +41,27 @@ The API endpoint is:
 
 ### 4. Storage Module
 - Database: Manages local data storage using Room database.
-- Entities and DAOs: Defines entities and data access objects for storing chat messages, users, and attachments.
 
 ### 5. Features Module
-- Chat Data: Handles chat-specific data operations and database interactions.
-- Mappers: Maps data between domain models and database entities.
-- Repository: Provides a repository implementation for chat data.
+#### Chat Feature
+- **Data**: Handles chat-specific data operations and database interactions. It is further divided into sub-packages:
+  - **local**: Contains classes and interfaces related to local data storage, such as Room database entities and DAOs.
+  - **mapper**: Responsible for mapping data between different layers of the application, such as converting database entities to domain models and vice versa.
+  - **repository**: Provides implementations for data repositories, which are responsible for handling data operations and providing a clean API for the rest of the application.
+
+- **DI**: The `di` package contains classes and modules related to dependency injection. This package ensures that dependencies are managed and injected properly throughout the Chat feature.
+  - **ChatModule.kt**: This file defines the dependency injection module for the Chat feature, providing necessary dependencies like ViewModel, repositories, use cases, etc.
+
+- **Domain**: The `domain` package contains the business logic of the Chat feature. It is further divided into sub-packages:
+  - **interactor**: Contains use cases or interactors that encapsulate specific business rules or operations related to the chat functionality.
+  - **interfaces**: Defines interfaces for the various components within the domain layer, such as repository interfaces.
+  - **model**: Contains domain models representing the core entities of the chat feature, such as `Message`, `User`, and `Attachment`.
+  - **useCase**: Houses the use case classes which contain the business logic to perform specific tasks.
+
+- **Presentation**: The `presentation` package handles the user interface and presentation logic of the Chat feature. It contains composables, ViewModels, and other UI-related components.
+  - **ui**: This package includes composable functions and UI components specific to the Chat feature, such as `ChatScreen`, `MessageBubble`, and `AttachmentScreen`.
+  - **ChatViewModel**: The ViewModel class for managing UI-related data in a lifecycle-conscious way. It communicates with the domain layer to fetch and update chat data.
+
 
 ## Dependencies
 
