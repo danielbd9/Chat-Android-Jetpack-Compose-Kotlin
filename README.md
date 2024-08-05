@@ -2,9 +2,8 @@
 
 #7egend - Challenge
 
-<img src="https://github.com/user-attachments/assets/74e1ad30-f91b-4033-a959-b3989f7bf4e4" alt="Chat Message" width="300" height="600"/>
-<img src="https://github.com/user-attachments/assets/f1cba4fb-42ec-4dc0-ba85-7c1a5954ae74" alt="Chat Message 2" width="300" height="600"/>
-<img src="https://github.com/user-attachments/assets/f50a1b9c-49fe-4fb2-91a2-45d725725041" alt="Chat Splash" width="300" height="600"/>
+![WhatsApp Image 2024-08-05 at 06 54 09 (1)](https://github.com/user-attachments/assets/7d247e02-6d1c-41cb-bd94-4ef1c67c7758)
+
 
 ## Resume
 
@@ -26,7 +25,7 @@ The API endpoint is:
 ## Modules
 
 ### 1. App Module
-- UI Components: Contains composable functions for UI components like SplashScreen, ChatScreen, and AttachmentScreen.
+- UI Components: Contains composable functions for UI components.
 - Navigation: Manages navigation between different screens using Jetpack Navigation Compose.
 - Dependency Injection: Uses Koin for dependency injection.
 
