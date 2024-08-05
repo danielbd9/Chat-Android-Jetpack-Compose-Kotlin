@@ -24,10 +24,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import com.pt.chat.R
+import com.pt.components.dimens.Dimens
 import com.pt.components.ui.PlaceholderComponent
 
 @Composable
@@ -52,7 +54,7 @@ fun AttachmentScreen(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
+                    .padding(Dimens.largePadding),
                 contentAlignment = Alignment.Center
             ) {
                 Row(
@@ -61,13 +63,13 @@ fun AttachmentScreen(
                 ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Back",
+                        contentDescription = stringResource(id = R.string.chat_back_button),
                         tint = Color.White,
                         modifier = Modifier
-                            .size(24.dp)
+                            .size(Dimens.iconSize)
                             .clickable { onBack() }
                     )
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(Dimens.mediumPadding))
                     Text(
                         text = attachmentTitle.orEmpty(),
                         style = MaterialTheme.typography.bodyLarge,
@@ -77,10 +79,10 @@ fun AttachmentScreen(
                     Spacer(modifier = Modifier.weight(1f))
                     Icon(
                         imageVector = Icons.Default.Close,
-                        contentDescription = "Close",
+                        contentDescription = stringResource(id = R.string.chat_close_button),
                         tint = Color.White,
                         modifier = Modifier
-                            .size(24.dp)
+                            .size(Dimens.iconSize)
                             .clickable { onBack() }
                     )
                 }
@@ -103,7 +105,7 @@ fun AttachmentScreen(
                     }
                 } else {
                     Text(
-                        text = "No attachment URL provided.",
+                        text = stringResource(id = R.string.chat_no_attachment_url_provided),
                         style = MaterialTheme.typography.bodyLarge,
                         color = Color.White,
                         modifier = Modifier.align(Alignment.Center)

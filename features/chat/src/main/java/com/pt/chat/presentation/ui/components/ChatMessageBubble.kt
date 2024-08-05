@@ -19,17 +19,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.SubcomposeAsyncImage
+import com.pt.chat.R
 import com.pt.chat.domain.model.Attachment
 import com.pt.chat.domain.model.Message
 import com.pt.chat.domain.model.User
+import com.pt.components.dimens.Dimens
 import com.pt.components.mapper.getPrimaryColor
 import com.pt.components.mapper.getSecondaryColor
 import com.pt.components.mapper.getUserColor
@@ -50,15 +54,21 @@ fun MessageBubble(
     isSent: Boolean = false
 ) {
     Row(
-        modifier = modifier.padding(8.dp),
+        modifier = modifier.padding(Dimens.mediumPadding),
         horizontalArrangement = if (isSent) Arrangement.End else Arrangement.Start
     ) {
         if (!isSent) {
             Box(
                 modifier = Modifier
-                    .size(40.dp)
+                    .size(Dimens.avatarSize)
                     .align(Alignment.Bottom)
-                    .background(getUserColor(user.id), CircleShape),
+                    .shadow(Dimens.elevation, CircleShape)
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colors = listOf(getUserColor(user.id), getUserColor(user.id))
+                        ),
+                        shape = CircleShape
+                    ),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
@@ -70,16 +80,21 @@ fun MessageBubble(
         }
         Box(
             modifier = Modifier
-                .padding(horizontal = 8.dp)
+                .padding(horizontal = Dimens.mediumPadding)
+                .shadow(Dimens.elevation, shape = if (isSent) {
+                    RoundedCornerShape(Dimens.messageBubbleCornerRadius).copy(bottomEnd = CornerSize(0))
+                } else {
+                    RoundedCornerShape(Dimens.messageBubbleCornerRadius).copy(bottomStart = CornerSize(0))
+                })
                 .background(
                     color = if (isSent) Color.Black else Color.White,
                     shape = if (isSent) {
-                        RoundedCornerShape(8.dp).copy(bottomEnd = CornerSize(0))
+                        RoundedCornerShape(Dimens.messageBubbleCornerRadius).copy(bottomEnd = CornerSize(0))
                     } else {
-                        RoundedCornerShape(8.dp).copy(bottomStart = CornerSize(0))
+                        RoundedCornerShape(Dimens.messageBubbleCornerRadius).copy(bottomStart = CornerSize(0))
                     }
                 )
-                .padding(8.dp)
+                .padding(Dimens.mediumPadding)
         ) {
             Column {
                 if (!isSent) {
@@ -87,20 +102,20 @@ fun MessageBubble(
                         text = user.name.orEmpty(),
                         style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
                         color = getPrimaryColor(),
-                        modifier = Modifier.padding(bottom = 4.dp)
+                        modifier = Modifier.padding(bottom = Dimens.smallPadding)
                     )
                 }
                 if (message.attachments?.isNotEmpty() == true) {
                     SubcomposeAsyncImage(
                         model = message.attachments[0].thumbnailUrl,
-                        contentDescription = "Thumbnail",
+                        contentDescription = stringResource(id = R.string.chat_attachment_thumbnail_content_description),
                         contentScale = ContentScale.FillBounds,
                         loading = {
                             Box(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .height(200.dp)
-                                    .clip(RoundedCornerShape(8.dp))
+                                    .height(Dimens.attachmentLoadingHeight)
+                                    .clip(RoundedCornerShape(Dimens.messageBubbleCornerRadius))
                                     .background(getSecondaryColor()),
                                 contentAlignment = Alignment.Center
                             ) {
@@ -109,8 +124,8 @@ fun MessageBubble(
                         },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(150.dp)
-                            .clip(RoundedCornerShape(8.dp))
+                            .height(Dimens.attachmentThumbnailHeight)
+                            .clip(RoundedCornerShape(Dimens.messageBubbleCornerRadius))
                             .background(getSecondaryColor())
                             .clickable {
                                 val encodedUrl = URLEncoder.encode(
@@ -141,10 +156,10 @@ fun MessageBubblePreview() {
     val message = Message(
         id = 1,
         userId = 1,
-        content = "Hello, this is a test message with an attachment.",
+        content = stringResource(id = R.string.chat_test_message_content),
         timestamp = System.currentTimeMillis(),
         attachments = listOf(
-            Attachment(id = "1", title = "Attachment", url = "https://via.placeholder.com/600/92c952", thumbnailUrl = "https://via.placeholder.com/40")
+            Attachment(id = "1", title = stringResource(id = R.string.chat_attachment_title), url = "https://via.placeholder.com/600/92c952", thumbnailUrl = "https://via.placeholder.com/40")
         )
     )
     Column {

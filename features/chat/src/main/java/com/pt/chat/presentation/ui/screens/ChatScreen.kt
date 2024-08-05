@@ -36,16 +36,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.pt.chat.R
 import com.pt.chat.presentation.ChatViewModel
 import com.pt.chat.presentation.ui.components.MessageBubble
+import com.pt.components.dimens.Dimens
 import com.pt.components.mapper.getPrimaryColor
 import com.pt.components.mapper.getSecondaryColor
-import com.pt.components.ui.ErrorMessage
-import com.pt.components.ui.LoadingIndicator
+import com.pt.components.ui.ErrorComponent
+import com.pt.components.ui.LoadingComponent
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -83,14 +84,14 @@ fun ChatScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = 8.dp, vertical = 4.dp)
+                    .padding(horizontal = Dimens.mediumPadding, vertical = Dimens.smallPadding)
             ) {
                 Box(modifier = Modifier.weight(1f)) {
                     LazyColumn(
                         state = listState,
                         reverseLayout = true,
                         modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(vertical = 8.dp)
+                        contentPadding = PaddingValues(vertical = Dimens.mediumPadding)
                     ) {
                         items(messagesWithUsers) { messageWithUser ->
                             MessageBubble(
@@ -100,20 +101,20 @@ fun ChatScreen(
                                 modifier = Modifier.fillMaxWidth(),
                                 isSent = messageWithUser.messages.userId == chatViewModel.getLoggedInUserId()
                             )
-                            Spacer(modifier = Modifier.height(4.dp))
+                            Spacer(modifier = Modifier.height(Dimens.smallPadding))
                         }
                     }
 
                     if (isLoading) {
-                        LoadingIndicator()
+                        LoadingComponent()
                     }
                 }
 
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(Color.White, shape = RoundedCornerShape(24.dp))
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                        .background(Color.White, shape = RoundedCornerShape(Dimens.roundedCornerShape))
+                        .padding(horizontal = Dimens.largePadding, vertical = Dimens.mediumPadding),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     BasicTextField(
@@ -121,16 +122,16 @@ fun ChatScreen(
                         onValueChange = { messageText = it },
                         modifier = Modifier
                             .weight(1f)
-                            .background(Color(0xFFF1F1F1), shape = RoundedCornerShape(24.dp))
-                            .padding(horizontal = 16.dp, vertical = 8.dp),
+                            .background(getSecondaryColor(), shape = RoundedCornerShape(Dimens.roundedCornerShape))
+                            .padding(horizontal = Dimens.largePadding, vertical = Dimens.mediumPadding),
                         maxLines = 5,
-                        textStyle = LocalTextStyle.current.copy(fontSize = 16.sp)
+                        textStyle = LocalTextStyle.current.copy(fontSize = Dimens.mediumTextSize)
                     ) { innerTextField ->
                         if (messageText.text.isEmpty()) {
                             Text(
-                                text = "Type a message",
+                                text = stringResource(id = R.string.chat_type_a_message),
                                 color = Color.Gray,
-                                fontSize = 16.sp
+                                fontSize = Dimens.mediumTextSize
                             )
                         }
                         innerTextField()
@@ -150,7 +151,7 @@ fun ChatScreen(
                     ) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.Send,
-                            contentDescription = "Send",
+                            contentDescription = stringResource(id = R.string.chat_back_button),
                             tint = getPrimaryColor()
                         )
                     }
@@ -159,6 +160,6 @@ fun ChatScreen(
         }
     }
     else{
-        ErrorMessage("Sorry, something went wrong! \n Try again later.")
+        ErrorComponent(stringResource(id = R.string.chat_error_message))
     }
 }

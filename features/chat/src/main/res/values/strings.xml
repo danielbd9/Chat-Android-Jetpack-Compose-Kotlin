@@ -1,3 +1,11 @@
 <resources>
     <string name="title_activity_chat">ChatActivity</string>
+    <string name="chat_attachment_thumbnail_content_description">Thumbnail</string>
+    <string name="chat_test_message_content">Hello, this is a test message with an attachment.</string>
+    <string name="chat_attachment_title">Attachment</string>
+    <string name="chat_back_button">Back</string>
+    <string name="chat_close_button">Close</string>
+    <string name="chat_no_attachment_url_provided">No attachment URL provided.</string>
+    <string name="chat_type_a_message">Type a message</string>
+    <string name="chat_error_message">Sorry, something went wrong! \n Try again later.</string>
 </resources>

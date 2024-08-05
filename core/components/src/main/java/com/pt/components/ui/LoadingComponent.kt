@@ -19,11 +19,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
+import com.pt.components.dimens.Dimens
 import com.pt.components.mapper.getPrimaryColor
 
 @Composable
-fun LoadingIndicator(
+fun LoadingComponent(
     color: Color = getPrimaryColor(),
     alignment: Alignment = Alignment.BottomCenter
 ) {
@@ -57,28 +57,30 @@ fun LoadingIndicator(
     )
 
     Box(
-        modifier = Modifier.fillMaxSize().padding(bottom = 16.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(bottom = Dimens.loadingIndicatorBottomPadding),
         contentAlignment = alignment
     ) {
         Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(Dimens.loadingIndicatorSpacing),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Box(
                 modifier = Modifier
-                    .size(10.dp)
+                    .size(Dimens.loadingIndicatorSize)
                     .scale(scale1)
                     .background(color, shape = androidx.compose.foundation.shape.CircleShape)
             )
             Box(
                 modifier = Modifier
-                    .size(10.dp)
+                    .size(Dimens.loadingIndicatorSize)
                     .scale(scale2)
                     .background(color, shape = androidx.compose.foundation.shape.CircleShape)
             )
             Box(
                 modifier = Modifier
-                    .size(10.dp)
+                    .size(Dimens.loadingIndicatorSize)
                     .scale(scale3)
                     .background(color, shape = androidx.compose.foundation.shape.CircleShape)
             )

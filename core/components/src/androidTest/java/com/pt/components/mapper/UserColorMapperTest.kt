@@ -1,8 +1,5 @@
-package com.pt.chat
+package com.pt.components.mapper
 
-import com.pt.components.mapper.getPrimaryColor
-import com.pt.components.mapper.getSecondaryColor
-import com.pt.components.mapper.getUserColor
 import com.pt.components.theme.blue
 import com.pt.components.theme.cyan
 import com.pt.components.theme.darkGray

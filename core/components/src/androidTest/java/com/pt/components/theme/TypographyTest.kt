@@ -1,10 +1,9 @@
-package com.pt.chat
+package com.pt.components.theme
 
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.pt.components.theme.Typography
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

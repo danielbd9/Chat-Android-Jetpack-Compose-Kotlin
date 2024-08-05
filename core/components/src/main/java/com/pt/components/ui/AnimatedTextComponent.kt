@@ -16,16 +16,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.pt.components.R
+import com.pt.components.dimens.Dimens
 import com.pt.components.mapper.getPrimaryColor
 import kotlinx.coroutines.delay
 
-
 @Composable
 fun AnimatedTextComponent() {
-    val words = listOf("LET'S", "TALK...")
+    val words = listOf(
+        stringResource(id = R.string.chat_lets),
+        stringResource(id = R.string.chat_talk)
+    )
     var currentWordIndex by remember { mutableIntStateOf(0) }
     var currentCharIndex by remember { mutableIntStateOf(0) }
     val currentWord = words[currentWordIndex]
@@ -46,7 +51,8 @@ fun AnimatedTextComponent() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(bottom = 130.dp),
+            .padding(bottom = 130.dp)
+            .testTag("AnimatedTextComponent"),
         contentAlignment = Alignment.BottomCenter
     ) {
         AnimatedVisibility(
@@ -56,7 +62,7 @@ fun AnimatedTextComponent() {
         ) {
             Text(
                 text = currentWord.take(currentCharIndex),
-                fontSize = 24.sp,
+                fontSize = Dimens.extraLargeTextSize,
                 fontWeight = FontWeight.Bold,
                 color = getPrimaryColor()
             )

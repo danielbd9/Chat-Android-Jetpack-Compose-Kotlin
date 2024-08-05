@@ -11,7 +11,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
@@ -19,6 +18,7 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.pt.components.ui.AnimatedTextComponent
+import com.pt.components.dimens.Dimens
 import kotlinx.coroutines.delay
 
 @Composable
@@ -37,7 +37,7 @@ fun SplashScreen(navController: NavController) {
         contentAlignment = Alignment.Center
     ) {
         LottieAnimation(
-            modifier = Modifier.size(200.dp),
+            modifier = Modifier.size(Dimens.splashAnimationSize),
             resId = com.pt.components.R.raw.splash_animation,
             iterations = LottieConstants.IterateForever,
             speed = 1.0f
@@ -45,7 +45,7 @@ fun SplashScreen(navController: NavController) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(bottom = 50.dp),
+                .padding(bottom = Dimens.splashBottomPadding),
             contentAlignment = Alignment.BottomCenter
         ) {
             AnimatedTextComponent()
