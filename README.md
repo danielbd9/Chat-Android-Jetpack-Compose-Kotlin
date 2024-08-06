@@ -2,8 +2,8 @@
 
 #7egend - Challenge
 
-![WhatsApp Image 2024-08-05 at 06 54 09 (1)](https://github.com/user-attachments/assets/7d247e02-6d1c-41cb-bd94-4ef1c67c7758)
 
+![Screenshot_20240805_072540](https://github.com/user-attachments/assets/6dff4beb-50ea-4820-9499-6a68e78b0318)
 
 ## Resume
 
