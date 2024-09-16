@@ -1,7 +1,5 @@
 # Chat Application
 
-#7egend - Challenge
-
 ![Screenshot_20240805_072540](https://github.com/user-attachments/assets/987c7781-57cd-41e8-a415-11e678188cf1)
 
 ## Resume
